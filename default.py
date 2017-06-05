@@ -881,8 +881,13 @@ class Main:
 
 
     def _set_thedir(self, theartist, dirtype):
-        CacheName = itemHash(theartist)
-        thedir = xbmc.translatePath('special://profile/addon_data/%s/%s/%s/' % ( addonname , dirtype, CacheName, )).decode('utf-8')
+        CacheName = theartist.title()
+	CacheName2 = CacheName[:-1] if CacheName.endswith('.') else CacheName
+	CacheName3 = CacheName2[1:] if CacheName2.startswith('.') else CacheName2
+	CacheName4 = CacheName3[1:] if CacheName3.startswith('.') else CacheName3
+	CacheName5 = CacheName4[1:] if CacheName4.startswith('.') else CacheName4
+	CacheName6 = ''.join([x for x in CacheName5 if ord(x) < 128])
+        thedir = xbmc.translatePath('special://profile/addon_data/%s/%s/%s/extrafanart' % ( addonname , dirtype, CacheName6, )).decode('utf-8')
         exists, loglines = checkPath( thedir )
         lw.log( loglines )
         return thedir
